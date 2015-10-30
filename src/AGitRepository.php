@@ -102,7 +102,7 @@ class AGitRepository  {
 	{
 		if (!($realPath = realpath($path))) {
 			if (!$createIfEmpty) {
-				throw new InvalidArgumentException("The specified path does not exist: ".$path);
+				throw new \Exception("The specified path does not exist: ".$path);
 			}
 			mkdir($path);
 			$realPath = realpath($path);
@@ -113,7 +113,7 @@ class AGitRepository  {
 				$this->initialize();
 			}
 			else {
-				throw new InvalidArgumentException("The specified path is not a git repository");
+				throw new \Exception("The specified path is not a git repository");
 			}
 		}
 	}
@@ -202,7 +202,7 @@ class AGitRepository  {
 			return;
 		}
 		if (!file_exists($file) && !(substr($file,0,1) != "/" && file_exists($this->getPath()."/".$file) )) {
-			throw new AGitException("Cannot add ".$file." to the repository because it doesn't exist");
+			throw new \Exception("Cannot add ".$file." to the repository because it doesn't exist");
 		}
 		$this->run("add ".$file);
 	}
@@ -222,7 +222,7 @@ class AGitRepository  {
 			return;
 		}
 		if (!file_exists($file) && !(substr($file,0,1) != "/" && file_exists($this->getPath()."/".$file) )) {
-			throw new AGitException("Cannot remove ".$file." from the repository because it doesn't exist");
+			throw new \Exception("Cannot remove ".$file." from the repository because it doesn't exist");
 		}
 		if ($force) {
 			$this->run("rm -f ".$file);
@@ -246,7 +246,7 @@ class AGitRepository  {
 		$command = "mv $src $dest";
 		
 		if (!file_exists($this->getPath()."/".$src)) {
-			throw new AGitException("Cannot rename '$src' dir in the repository because it doesn't exist");
+			throw new \Exception("Cannot rename '$src' dir in the repository because it doesn't exist");
 		}
 		
 		if ($force) {
@@ -544,7 +544,7 @@ class AGitRepository  {
 	public function getCommit($hash)
 	{
 		if (strlen($hash) < 40) {
-			throw new AGitException('Abbreviated commit hashes are not supported yet.');
+			throw new \Exception('Abbreviated commit hashes are not supported yet.');
 		}
 
 		if (!isset($this->_commits[$hash])) {

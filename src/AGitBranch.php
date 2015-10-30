@@ -82,7 +82,7 @@ class AGitBranch  {
 		if ($len == 40 && isset($this->_commits[$hash])) {
 			return $this->_commits[$hash];
 		} elseif ($len < 40) {
-			throw new AGitException('Abbreviated commit hashes are not supported yet.');
+			throw new \Exception('Abbreviated commit hashes are not supported yet.');
 		}
 		return null;
 	}
